@@ -26,7 +26,7 @@ resource "aws_security_group" "functionbeat_securitygroup" {
 }
 
 module "functionbeat" {
-  source = "xxx"
+  source = "git::ssh://git@github.com:PacoVK/functionbeat.git"
 
   application_name     = "crazy-test-application"
   functionbeat_version = "7.17.1"

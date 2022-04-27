@@ -38,8 +38,6 @@ module "functionbeat" {
   application_name     = "crazy-test-module"
   functionbeat_version = "7.17.1"
 
-  lambda_write_arn_to_ssm = false
-
   lambda_config = {
     name = "my-kibana-exporter"
 
