@@ -1,0 +1,42 @@
+functionbeat.provider.aws.endpoint: "cannot-be-empty-but-is-unused"
+
+# has to be set but is actually not used
+functionbeat.provider.aws.functions:
+  - name: ${enabled_function_name}
+    enabled: true
+    type: cloudwatch_logs
+    triggers:
+      - log_group_name: not-used
+
+# ================================== General ===================================
+
+# The name of the shipper that publishes the network data. It can be used to group
+# all the transactions sent by a single shipper in the web interface.
+name: ${enabled_function_name}
+
+# The tags of the shipper are included in their own field with each
+# transaction published.
+${yamlencode({
+    tags = concat([application_name],fb_transaction_tags)
+})}
+
+# ================================== Outputs ===================================
+
+# Configure what output to use when sending the data collected by the beat.
+
+# ---------------------------- Elasticsearch Output ----------------------------
+${yamlencode({
+    output = {
+        elasticsearch = output_elasticsearch
+    }
+})}
+
+# ================================== Logging ===================================
+
+# Sets log level. The default log level is info.
+# Available log levels are: error, warning, info, debug
+logging.level: "$${LOG_LEVEL:info}"
+
+# ======================== Terraform generated content =========================
+
+${yamlencode(fb_extra_configuration)}
