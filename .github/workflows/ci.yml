@@ -7,7 +7,7 @@ defaults:
     working-directory: test
 
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
