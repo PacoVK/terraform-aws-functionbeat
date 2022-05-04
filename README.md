@@ -11,6 +11,8 @@ Since this module executes a script ensure your machine has the following softwa
 
 ## Simple example ##
 
+For detailed example please refer to this [blog post](https://medium.com/@pascal-euhus/terraform-functionbeat-e481554d729e)
+
 ````terraform
 resource "aws_security_group" "functionbeat_securitygroup" {
   name   = "Functionbeat"
