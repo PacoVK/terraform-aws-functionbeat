@@ -51,7 +51,7 @@ module "functionbeat" {
 
 ## Advanced example ##
 
-Head over to `test/main.tf` to get an more advanced example.
+Head over to `example/main.tf` to get an more advanced example.
 
 ## Usage ##
 

@@ -4,6 +4,7 @@
 *.zip
 *tfstate
 *tfstate.backup
-test/functionbeat-*
+examples/functionbeat-*
 *.lock.hcl
 *.info
+functionbeat.yml

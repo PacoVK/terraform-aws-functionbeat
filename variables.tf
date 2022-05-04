@@ -1,16 +1,17 @@
 # ================================== Required =====================================
 
 variable "application_name" {
-  type        = string
   description = "This value is added to any log in Kibana as a tag for filtering"
+  type        = string
 }
 
 variable "functionbeat_version" {
+  description = "Funtionbeat version to deploy"
   type        = string
-  description = "Funtionbeat version"
 }
 
 variable "lambda_config" {
+  description = "Minimal required configuration for Functionbeat lambda"
   type = object({
     name = string
     vpc_config = object({
@@ -57,7 +58,7 @@ variable "lambda_write_arn_to_ssm" {
 # ============================== Extra Functionbeat ===============================
 
 variable "fb_extra_configuration" {
-  description = "Tags to add to the resources"
+  description = "All valid Functionbeat configuration passed as valid HCL object. For configuration options head over to Functionbeat documentation."
   type        = any
   default     = {}
 }

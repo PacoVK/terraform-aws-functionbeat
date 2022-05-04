@@ -19,6 +19,11 @@ resource "aws_subnet" "subnet" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "example_logs" {
+  name              = "MyExampleService"
+  retention_in_days = 1
+}
+
 resource "aws_security_group" "functionbeat_securitygroup" {
   name   = "Functionbeat"
   vpc_id = aws_vpc.vpc.id
@@ -54,6 +59,8 @@ module "functionbeat" {
       password : "mysupersecret"
     }
   }
+
+  loggroup_name = aws_cloudwatch_log_group.example_logs.name
 
   fb_extra_configuration = {
     fields = {
