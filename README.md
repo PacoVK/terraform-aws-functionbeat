@@ -149,10 +149,10 @@ This module exposes:
 * Setup AWS config locally
 * Setup Terraform cli
 
-In ``test/`` there is an advanced example.
+In ``examples/`` there is an advanced example.
 Simply checkout the module source and
 ```shell
-cd test/
+cd examples/
 terrafrom init
 terraform apply -auto-approve
 ```
