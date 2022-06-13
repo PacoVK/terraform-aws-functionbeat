@@ -9,6 +9,12 @@ Since this module executes a script ensure your machine has the following softwa
 * curl
 * tar
 
+### Running under Alpine ###
+:info: 
+The Functionbeat installer is not compatible with Alpine, due to missing libc. To be able to use this module on Alpine,
+eg. in a CI pipeline, you need to provide the missing dependencies. 
+You can install libc6-compat using ``apk add --no-cache libc6-compat``. 
+
 ## Simple example ##
 
 For detailed example please refer to this [blog post](https://medium.com/@pascal-euhus/terraform-functionbeat-e481554d729e)
