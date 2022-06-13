@@ -15,7 +15,7 @@ export ENABLED_FUNCTION="${ENABLED_FUNCTION}"
 
 if [ ! -d "${DESTINATION}" ]; then
   curl -s "${FUNCTION_BEAT_URL}" > "${DESTINATION}".tar.gz
-  tar xzvf "${DESTINATION}".tar.gz
+  tar xzvf "${DESTINATION}".tar.gz > /dev/null
   rm -rf "${DESTINATION}".tar.gz
 fi
 
@@ -24,6 +24,7 @@ cp -f "${CONFIG_FILE}" "${DESTINATION}"/functionbeat.yml
 cd "${DESTINATION}"
 ./functionbeat -v -e package --output ./../"${DESTINATION}-release".zip
 
+cd ..
 rm -rf "${DESTINATION}"
 
 jq -M -c -n --arg destination "${DESTINATION}-release.zip" '{"filename": $destination}'
