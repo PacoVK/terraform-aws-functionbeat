@@ -13,6 +13,7 @@ resource "local_file" "functionbeat_config" {
     enabled_function_name  = var.lambda_config.name
     application_name       = var.application_name
     output_elasticsearch   = var.lambda_config.output_elasticsearch
+    output_logstash        = var.lambda_config.output_logstash
     fb_transaction_tags    = var.fb_extra_tags
     fb_extra_configuration = var.fb_extra_configuration
   })

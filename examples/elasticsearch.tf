@@ -53,11 +53,12 @@ module "functionbeat" {
     }
 
     output_elasticsearch = {
-      hosts : ["https://your-endpoint:443"]
-      protocol : "https"
-      username : "elastic"
-      password : "mysupersecret"
+      hosts    = ["https://your-endpoint:443"]
+      protocol = "https"
+      username = "elastic"
+      password = "mysupersecret"
     }
+
   }
 
   loggroup_name = aws_cloudwatch_log_group.example_logs.name

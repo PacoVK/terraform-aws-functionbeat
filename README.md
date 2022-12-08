@@ -17,7 +17,9 @@ You can install libc6-compat using ``apk add --no-cache libc6-compat``.
 
 ## Simple example ##
 
-For detailed example please refer to this [blog post](https://medium.com/@pascal-euhus/terraform-functionbeat-e481554d729e)
+For detailed example please refer to this [blog post](https://medium.com/@pascal-euhus/terraform-functionbeat-e481554d729e) using Elasticsearch output
+Please note that output to Logstash is also possible, but in this example we
+use Elasticsearch.
 
 ````terraform
 resource "aws_security_group" "functionbeat_securitygroup" {
@@ -59,7 +61,7 @@ module "functionbeat" {
 
 ## Advanced example ##
 
-Head over to `example/main.tf` to get an more advanced example.
+Head over to `example/elasticsearch.tf` to get an more advanced example.
 
 ## Usage ##
 
@@ -94,10 +96,10 @@ You configure your lambda here.
     }
     # You can put any HCL-Map with valid Functionbeat config for Elasticsearch Output 
     output_elasticsearch = {
-      hosts : ["https://your-endpoint:443"]
-      protocol : "https"
-      username : "elastic"
-      password : "mysupersecret"
+      hosts = ["https://your-endpoint:443"]
+      protocol = "https"
+      username = "elastic"
+      password = "mysupersecret"
     }
   }
 ````
