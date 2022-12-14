@@ -25,11 +25,22 @@ ${yamlencode({
 # Configure what output to use when sending the data collected by the beat.
 
 # ---------------------------- Elasticsearch Output ----------------------------
+
+%{ if output_elasticsearch != null }
 ${yamlencode({
     output = {
         elasticsearch = output_elasticsearch
     }
 })}
+%{ endif }
+
+%{ if output_logstash != null }
+${yamlencode({
+    output = {
+        logstash = output_logstash
+    }
+})}
+%{ endif }
 
 # ================================== Logging ===================================
 

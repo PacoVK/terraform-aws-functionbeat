@@ -19,7 +19,8 @@ variable "lambda_config" {
       subnet_ids         = list(string)
       security_group_ids = list(string)
     })
-    output_elasticsearch = any
+    output_elasticsearch = optional(any)
+    output_logstash      = optional(any)
   })
 }
 
