@@ -38,7 +38,7 @@ resource "aws_security_group" "functionbeat_securitygroup" {
 }
 
 module "functionbeat" {
-  source = "../"
+  source = "../.."
 
   application_name     = "crazy-test-module"
   functionbeat_version = "7.17.1"
@@ -52,10 +52,13 @@ module "functionbeat" {
       security_group_ids = [aws_security_group.functionbeat_securitygroup.id]
     }
 
-    output_logstash = {
-      hosts       = ["10.0.0.1:5044", "10.0.0.2:5044"]
-      ssl.enabled = false
+    output_elasticsearch = {
+      hosts    = ["https://your-endpoint:443"]
+      protocol = "https"
+      username = "elastic"
+      password = "mysupersecret"
     }
+
   }
 
   loggroup_name = aws_cloudwatch_log_group.example_logs.name

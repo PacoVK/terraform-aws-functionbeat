@@ -61,7 +61,7 @@ module "functionbeat" {
 
 ## Advanced example ##
 
-Head over to `example/elasticsearch.tf` to get an more advanced example.
+Head over to `example/elasticsearch/elasticsearch.tf`  or `example/logstash/logstash.tf` to get an more advanced example.
 
 ## Usage ##
 
@@ -162,7 +162,7 @@ This module exposes:
 In ``examples/`` there is an advanced example.
 Simply checkout the module source and
 ```shell
-cd examples/
+cd examples/elasticsearch
 terrafrom init
 terraform apply -auto-approve
 ```
