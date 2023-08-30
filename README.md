@@ -1,5 +1,11 @@
 # README #
 
+### [DEPRECATION NOTICE] ###
+Functionbeat has been deprecated in favor to the new [Elastic Serverless Forwarder](https://www.elastic.co/guide/en/esf/current/aws-elastic-serverless-forwarder.html). Fortunately, Elastic Serverless Forwarder ships with a [Terraform deployment capability](https://www.elastic.co/guide/en/esf/current/aws-deploy-elastic-serverless-forwarder.html#aws-serverless-forwarder-deploy-terraform).  
+This module will **stay maintained, but no additional features** will be added.
+
+## What is this module for? ##
+
 Terraform wrapper module to ship Cloudwatch Logs to Kibana via Functionbeat. See [official Docs](https://www.elastic.co/guide/en/beats/functionbeat/current/index.html). <br/>
 The official Functionbeat is based on Cloudformation and also ships with a deployment CLI. If you prefer to stick to Terraform you cannot use Functionbeat alongside your infrastructure code base. This module wrapps the base function to package the Functionbeat lambda and actually deploys via Terraform. 
 
@@ -8,6 +14,8 @@ Since this module executes a script ensure your machine has the following softwa
 * jq
 * curl
 * tar
+* zip
+* unzip
 
 ### Running under Alpine ###
 :information_source: 
