@@ -1,5 +1,11 @@
 # README #
 
+### [DEPRECATION NOTICE] ###
+Functionbeat has been deprecated in favor to the new [Elastic Serverless Forwarder](https://www.elastic.co/guide/en/esf/current/aws-elastic-serverless-forwarder.html). Fortunately, Elastic Serverless Forwarder ships with a [Terraform deployment capability](https://www.elastic.co/guide/en/esf/current/aws-deploy-elastic-serverless-forwarder.html#aws-serverless-forwarder-deploy-terraform).  
+This module will **stay maintained, but no additional features** will be added.
+
+## What is this module for? ##
+
 Terraform wrapper module to ship Cloudwatch Logs to Kibana via Functionbeat. See [official Docs](https://www.elastic.co/guide/en/beats/functionbeat/current/index.html). <br/>
 The official Functionbeat is based on Cloudformation and also ships with a deployment CLI. If you prefer to stick to Terraform you cannot use Functionbeat alongside your infrastructure code base. This module wrapps the base function to package the Functionbeat lambda and actually deploys via Terraform. 
 
@@ -8,6 +14,8 @@ Since this module executes a script ensure your machine has the following softwa
 * jq
 * curl
 * tar
+* zip
+* unzip
 
 ### Running under Alpine ###
 :information_source: 
@@ -75,8 +83,8 @@ Head over to `example/elasticsearch/elasticsearch.tf`  or `example/logstash/logs
 | lambda_memory_size                   |     -    | Memory size (default: 128MB)                                                                                                         |
 | lambda_timeout                       |     -    | Timeout (default: 3s)                                                                                                                |
 | lambda_description                   |     -    | Description added to the Lambda (default: "Lambda function to ship cloudwatch logs to Kibana")                                       |
-| fb_log_level                         |     -    | Functionbeat loglevel, will be set as an ENV on the Lambda level for easy adjustion (default: info)                                  |
 | lambda_write_arn_to_ssm              |     -    | Switch to control weather the actual Lambda ARN should be written to SSM (default:true)                                              |
+| fb_log_level                         |     -    | Functionbeat loglevel, will be set as an ENV on the Lambda level for easy adjustion (default: info)                                  |
 | fb_extra_configuration               |     -    | HCL-Map with actual Functionbeat config (default: {})                                                                                |
 | fb_extra_tags                        |     -    | The tags of the shipper are included in their own field with each transaction published (default: [])                                |
 | loggroup_name                        |     -    | Name of the Cloudwatch log group to be added as trigger for the function (default: null)                                             |
