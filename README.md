@@ -75,8 +75,8 @@ Head over to `example/elasticsearch/elasticsearch.tf`  or `example/logstash/logs
 | lambda_memory_size                   |     -    | Memory size (default: 128MB)                                                                                                         |
 | lambda_timeout                       |     -    | Timeout (default: 3s)                                                                                                                |
 | lambda_description                   |     -    | Description added to the Lambda (default: "Lambda function to ship cloudwatch logs to Kibana")                                       |
-| fb_log_level                         |     -    | Functionbeat loglevel, will be set as an ENV on the Lambda level for easy adjustion (default: info)                                  |
 | lambda_write_arn_to_ssm              |     -    | Switch to control weather the actual Lambda ARN should be written to SSM (default:true)                                              |
+| fb_log_level                         |     -    | Functionbeat loglevel, will be set as an ENV on the Lambda level for easy adjustion (default: info)                                  |
 | fb_extra_configuration               |     -    | HCL-Map with actual Functionbeat config (default: {})                                                                                |
 | fb_extra_tags                        |     -    | The tags of the shipper are included in their own field with each transaction published (default: [])                                |
 | loggroup_name                        |     -    | Name of the Cloudwatch log group to be added as trigger for the function (default: null)                                             |
