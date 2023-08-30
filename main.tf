@@ -32,12 +32,12 @@ resource "aws_lambda_function" "functionbeat" {
   filename         = data.external.lambda_loader.result.filename
   source_code_hash = filebase64sha256(data.external.lambda_loader.result.filename)
   # unused by this runtime but still required
-  handler          = "null.handler"
-  role             = aws_iam_role.lambda_execution_role.arn
-  runtime          = "provided.al2"
-  architectures    = ["x86_64"]
-  timeout          = var.lambda_timeout
-  memory_size      = var.lambda_memory_size
+  handler       = "null.handler"
+  role          = aws_iam_role.lambda_execution_role.arn
+  runtime       = "provided.al2"
+  architectures = ["x86_64"]
+  timeout       = var.lambda_timeout
+  memory_size   = var.lambda_memory_size
   vpc_config {
     security_group_ids = var.lambda_config.vpc_config.security_group_ids
     subnet_ids         = var.lambda_config.vpc_config.subnet_ids
