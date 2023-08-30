@@ -23,8 +23,21 @@ cp -f "${CONFIG_FILE}" "${DESTINATION}"/functionbeat.yml
 
 cd "${DESTINATION}"
 ./functionbeat -v -e package --output ./../"${DESTINATION}-release".zip
-
 cd ..
 rm -rf "${DESTINATION}"
+
+unzip -o -qq -a "${DESTINATION}"-release.zip -d "${DESTINATION}"-release
+rm -rf "${DESTINATION}"-release.zip
+
+cd "${DESTINATION}"-release
+# custom runtime requires the executable to be named bootstrap
+mv functionbeat-aws bootstrap
+chmod go-w functionbeat.yml
+cd ..
+
+zip -j -q "${DESTINATION}"-release.zip "${DESTINATION}"-release/*
+rm -rf "${DESTINATION}"-release
+
+cd ..
 
 jq -M -c -n --arg destination "${DESTINATION}-release.zip" '{"filename": $destination}'
