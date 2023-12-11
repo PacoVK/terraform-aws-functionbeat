@@ -16,6 +16,7 @@ resource "local_file" "functionbeat_config" {
     output_logstash        = var.lambda_config.output_logstash
     fb_transaction_tags    = var.fb_extra_tags
     fb_extra_configuration = var.fb_extra_configuration
+    fb_log_level           = var.fb_log_level
   })
   filename = "${path.module}/functionbeat.yml"
 }
