@@ -9,7 +9,7 @@ variable "functionbeat_version" {
   description = "Funtionbeat version to deploy"
   type        = string
   validation {
-    condition     = substr(var.functionbeat_version, 1, 1) >= "8" && substr(var.functionbeat_version, 3, 2) >= "12" && substr(var.functionbeat_version, 6, 1) >= "1"
+    condition     = tonumber(substr(var.functionbeat_version, 1, 1)) >= 8 && tonumber(substr(var.functionbeat_version, 3, 2)) >= 12 && tonumber(substr(var.functionbeat_version, 6, 1)) >= 1
     error_message = "The functionbeat_version must be at leat v8.12.1 to be able to use the provided.al2 aws lambda runtime."
   }
 }
