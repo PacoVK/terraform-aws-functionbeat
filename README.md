@@ -4,6 +4,9 @@
 Functionbeat has been deprecated in favor to the new [Elastic Serverless Forwarder](https://www.elastic.co/guide/en/esf/current/aws-elastic-serverless-forwarder.html). Fortunately, Elastic Serverless Forwarder ships with a [Terraform deployment capability](https://www.elastic.co/guide/en/esf/current/aws-deploy-elastic-serverless-forwarder.html#aws-serverless-forwarder-deploy-terraform).  
 This module will **stay maintained, but no additional features** will be added.
 
+> INFO: AWS deprecated the golang runtime. This module now uses the alternative way to run go binaries using `provided.al2` runtime. This requires a Functionbeat version of at least `8.12.1`.
+If you need to run a prior version you must use module version < 3.x. The full `provided.al2` runtime was heavily supported by [lutz108](https://github.com/lutz108)!
+
 ## What is this module for? ##
 
 Terraform wrapper module to ship Cloudwatch Logs to Kibana via Functionbeat. See [official Docs](https://www.elastic.co/guide/en/beats/functionbeat/current/index.html). <br/>
