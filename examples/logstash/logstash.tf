@@ -41,7 +41,7 @@ module "functionbeat" {
   source = "../.."
 
   application_name     = "crazy-test-module"
-  functionbeat_version = "7.17.1"
+  functionbeat_version = "8.12.1"
 
   lambda_config = {
     name = "my-kibana-exporter"
