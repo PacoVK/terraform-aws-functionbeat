@@ -1,24 +1,25 @@
+locals {
+  functionbeat_cache_dir = var.functionbeat_cache_dir != null ? var.functionbeat_cache_dir : "${path.root}/.terraform/functionbeat"
+}
+
 data "external" "lambda_loader" {
   program = ["${path.module}/lambda_loader.sh"]
 
   query = {
     version          = var.functionbeat_version
-    config_file      = local_file.functionbeat_config.filename
+    cache_dir        = "${local.functionbeat_cache_dir}/${terraform.workspace}"
     enabled_function = var.lambda_config.name
+    architecture     = var.lambda_architecture
+    functionbeat_yml = base64encode(templatefile("${path.module}/file/functionbeat.yml.tftpl", {
+      enabled_function_name  = var.lambda_config.name
+      application_name       = var.application_name
+      output_elasticsearch   = var.lambda_config.output_elasticsearch
+      output_logstash        = var.lambda_config.output_logstash
+      fb_transaction_tags    = var.fb_extra_tags
+      fb_extra_configuration = var.fb_extra_configuration
+      fb_log_level           = var.fb_log_level
+    }))
   }
-}
-
-resource "local_file" "functionbeat_config" {
-  content = templatefile("${path.module}/file/functionbeat.yml.tftpl", {
-    enabled_function_name  = var.lambda_config.name
-    application_name       = var.application_name
-    output_elasticsearch   = var.lambda_config.output_elasticsearch
-    output_logstash        = var.lambda_config.output_logstash
-    fb_transaction_tags    = var.fb_extra_tags
-    fb_extra_configuration = var.fb_extra_configuration
-    fb_log_level           = var.fb_log_level
-  })
-  filename = "${path.module}/functionbeat.yml"
 }
 
 resource "aws_cloudwatch_log_group" "functionbeat_logs" {
@@ -31,12 +32,12 @@ resource "aws_lambda_function" "functionbeat" {
   function_name    = var.lambda_config.name
   description      = var.lambda_description
   filename         = data.external.lambda_loader.result.filename
-  source_code_hash = filebase64sha256(data.external.lambda_loader.result.filename)
+  source_code_hash = data.external.lambda_loader.result.filehash
   # unused by this runtime but still required
   handler       = "null.handler"
   role          = aws_iam_role.lambda_execution_role.arn
-  runtime       = "provided.al2"
-  architectures = ["x86_64"]
+  runtime       = var.lambda_runtime
+  architectures = [var.lambda_architecture]
   timeout       = var.lambda_timeout
   memory_size   = var.lambda_memory_size
   vpc_config {
