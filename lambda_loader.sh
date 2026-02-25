@@ -8,6 +8,7 @@ eval "$(jq -er '@sh "VERSION=\(.version)
                     FUNCTIONBEAT_YML=\(.functionbeat_yml)"')"
 
 SYSTEM="$(uname | awk '{print tolower($0)}')"
+ABSOLUTE_CACHE_DIR="$(realpath -m "${CACHE_DIR}")"
 FUNCTION_BEAT_URL=https://artifacts.elastic.co/downloads/beats/functionbeat/functionbeat-"${VERSION}"-"${SYSTEM}"-"${ARCHITECTURE}".tar.gz
 
 DESTINATION=functionbeat-"${VERSION}"-"${SYSTEM}"-"${ARCHITECTURE}"
@@ -41,6 +42,9 @@ rm -rf "${DESTINATION}"-release.zip
 cd "${DESTINATION}"-release
 # custom runtime requires the executable to be named bootstrap
 mv functionbeat-aws bootstrap
+# replace absolute local path baked in by libbeat with the Lambda runtime path
+sed -i "s|${ABSOLUTE_CACHE_DIR}/${ENABLED_FUNCTION}/${DESTINATION}|/var/task|g" functionbeat.yml
+touch -r bootstrap functionbeat.yml
 chmod go-w functionbeat.yml
 cd ..
 
@@ -50,4 +54,4 @@ rm -rf "${DESTINATION}"-release
 
 FILEHASH=$(openssl dgst -binary -sha256 "${DESTINATION}-release.zip" | openssl base64)
 
-jq -M -c -n --arg filehash "$FILEHASH" --arg destination "${PWD}/${DESTINATION}-release.zip" '{"filename": $destination, "filehash": $filehash}'
+jq -M -c -n --arg filehash "$FILEHASH" --arg destination "${CACHE_DIR}/${ENABLED_FUNCTION}/${DESTINATION}-release.zip" '{"filename": $destination, "filehash": $filehash}'
