@@ -4,7 +4,8 @@ set -e
 eval "$(jq -er '@sh "VERSION=\(.version)
                     ENABLED_FUNCTION=\(.enabled_function)
                     ARCHITECTURE=\(.architecture)
-                    CACHE_DIR=\(.cache_dir)"')"
+                    CACHE_DIR=\(.cache_dir)
+                    FUNCTIONBEAT_YML=\(.functionbeat_yml)"')"
 
 SYSTEM="$(uname | awk '{print tolower($0)}')"
 FUNCTION_BEAT_URL=https://artifacts.elastic.co/downloads/beats/functionbeat/functionbeat-"${VERSION}"-"${SYSTEM}"-"${ARCHITECTURE}".tar.gz
@@ -27,7 +28,7 @@ cd "${CACHE_DIR}/${ENABLED_FUNCTION}"
 
 tar xzvf "../${DESTINATION}".tar.gz > /dev/null
 
-cp -f "functionbeat.yml" "${DESTINATION}"/functionbeat.yml
+echo "${FUNCTIONBEAT_YML}" | base64 -d > "${DESTINATION}"/functionbeat.yml
 
 cd "${DESTINATION}"
 ./functionbeat -v -e package --output ./../"${DESTINATION}-release".zip
