@@ -60,6 +60,24 @@ variable "lambda_write_arn_to_ssm" {
   default     = true
 }
 
+variable "lambda_runtime" {
+  description = "Runtime for the Lambda function. Default is 'provided.al2023' which is required for Functionbeat version 8.12.1 and above."
+  type        = string
+  default     = "provided.al2023"
+}
+
+variable "lambda_architecture" {
+  description = "Architecture for the Lambda function. Default is 'x86_64' other runtimes are not tested"
+  type        = string
+  default     = "x86_64"
+}
+
+variable "functionbeat_cache_dir" {
+  description = "Directory used to cache the Functionbeat archive and store generated config files. Defaults to .terraform/functionbeat under the root module."
+  type        = string
+  default     = null
+}
+
 # ============================== Extra Functionbeat ===============================
 
 variable "fb_extra_configuration" {
