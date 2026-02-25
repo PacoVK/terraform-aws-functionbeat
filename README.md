@@ -19,6 +19,7 @@ Since this module executes a script ensure your machine has the following softwa
 * tar
 * zip
 * unzip
+* openssl
 
 ### Running under Alpine ###
 :information_source: 
@@ -87,6 +88,9 @@ Head over to `example/elasticsearch/elasticsearch.tf`  or `example/logstash/logs
 | lambda_timeout                       |     -    | Timeout (default: 3s)                                                                                                                |
 | lambda_description                   |     -    | Description added to the Lambda (default: "Lambda function to ship cloudwatch logs to Kibana")                                       |
 | lambda_write_arn_to_ssm              |     -    | Switch to control weather the actual Lambda ARN should be written to SSM (default:true)                                              |
+| lambda_runtime                       |     -    | Runtime for the Lambda function (default: "provided.al2023")                                                                         |
+| lambda_architecture                  |     -    | Architecture for the Lambda function (default: "x86_64")                                                                             |
+| functionbeat_cache_dir               |     -    | Directory used to cache the Functionbeat archive and config files (default: `${path.root}/.terraform/functionbeat`)                  |
 | fb_log_level                         |     -    | Functionbeat loglevel, will be set as an ENV on the Lambda level for easy adjustion (default: info)                                  |
 | fb_extra_configuration               |     -    | HCL-Map with actual Functionbeat config (default: {})                                                                                |
 | fb_extra_tags                        |     -    | The tags of the shipper are included in their own field with each transaction published (default: [])                                |
