@@ -27,6 +27,22 @@ The Functionbeat installer is not compatible with Alpine, due to missing libc. T
 eg. in a CI pipeline, you need to provide the missing dependencies. 
 You can install libc6-compat using ``apk add --no-cache libc6-compat``. 
 
+### Host platform compatibility ###
+:warning:
+Functionbeat does not support cross-architecture packaging — the host's `functionbeat-aws`
+binary is bundled into the Lambda zip as-is. The host running `terraform apply` must
+therefore match `var.lambda_architecture`:
+
+| Host | `lambda_architecture = "x86_64"` | `lambda_architecture = "arm64"` |
+|------|----------------------------------|---------------------------------|
+| Linux x86_64           | ✓ | ✗ |
+| Linux arm64 / aarch64  | ✗ | ✓ |
+| macOS Intel (x86_64)   | ✓ | ✗ |
+| macOS Apple Silicon    | ✗ (no darwin-arm64 build is published by Elastic) | ✗ |
+
+Building arm64 Lambdas from a non-arm64 host requires running the module from inside
+a matching container (e.g. linux/arm64).
+
 ## Simple example ##
 
 For detailed example please refer to this [blog post](https://medium.com/@pascal-euhus/terraform-functionbeat-e481554d729e) using Elasticsearch output

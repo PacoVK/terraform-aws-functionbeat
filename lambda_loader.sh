@@ -8,7 +8,6 @@ eval "$(jq -er '@sh "VERSION=\(.version)
                     FUNCTIONBEAT_YML=\(.functionbeat_yml)"')"
 
 SYSTEM="$(uname | awk '{print tolower($0)}')"
-ABSOLUTE_CACHE_DIR="$(realpath -m "${CACHE_DIR}")"
 FUNCTION_BEAT_URL=https://artifacts.elastic.co/downloads/beats/functionbeat/functionbeat-"${VERSION}"-"${SYSTEM}"-"${ARCHITECTURE}".tar.gz
 
 DESTINATION=functionbeat-"${VERSION}"-"${SYSTEM}"-"${ARCHITECTURE}"
@@ -17,6 +16,7 @@ export BEAT_STRICT_PERMS=false
 export ENABLED_FUNCTION="${ENABLED_FUNCTION}"
 
 mkdir -p "${CACHE_DIR}/${ENABLED_FUNCTION}"
+ABSOLUTE_CACHE_DIR="$(cd "${CACHE_DIR}" && pwd -P)"
 
 # download functionbeat if not already in cache
 if [ ! -f "${CACHE_DIR}/${DESTINATION}.tar.gz" ]; then
@@ -43,9 +43,9 @@ cd "${DESTINATION}"-release
 # custom runtime requires the executable to be named bootstrap
 mv functionbeat-aws bootstrap
 # replace absolute local path baked in by libbeat with the Lambda runtime path
-sed -i "s|${ABSOLUTE_CACHE_DIR}/${ENABLED_FUNCTION}/${DESTINATION}|/var/task|g" functionbeat.yml
+sed "s|${ABSOLUTE_CACHE_DIR}/${ENABLED_FUNCTION}/${DESTINATION}|/var/task|g" functionbeat.yml > functionbeat.yml.tmp && mv functionbeat.yml.tmp functionbeat.yml
 touch -r bootstrap functionbeat.yml
-chmod go-w functionbeat.yml
+chmod 644 functionbeat.yml
 cd ..
 
 # zip destination contents and with deterministic file order
